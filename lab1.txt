@@ -1,0 +1,152 @@
+// =========================================
+// =========================================
+// Problem 1 
+Musicana records have decided to store information on musicians who perform on their albums in a database. The company has wisely chosen to hire you as a database designer. 
+
+1- Each musician that is recorded at Musicana has an ID number, a name, an address (street, city) and a phone number.
+Entity -> musician 
+    Attributes ->  'MusicianID', Name, Address(Street, City), PhoneNumber
+
+
+
+2- Each instrument that is used in songs recorded at Musicana has a unique name and a musical key (e.g., C, B-flat, E-flat). 
+Entity -> Instrument
+    Attributes -> 'Name', MusicalKey
+
+
+
+3- Each album that is recorded at the Musicana label has a unique title, a copyright date, and an album identifier. 
+Entity -> Album
+    Attributes -> 'AlbumID', 'Title', CopyrightDate
+
+
+
+4- Each song recorded at Musicana has a unique title and an author. 
+Entity -> Song 
+    Attributes -> 'Title', Author
+
+
+
+5- Each musician may play several instruments, and a given instrument may be played by several musicians.
+Relationships -> 
+    Musician-plays-Instrument:
+    Many-to-Many relationship
+        -> Musician--->m>Instrument
+        -> Musician<m<---Instrument
+Participation -> 
+    Musician    -> (Partial -or- Optional) 
+    Instrument  -> (Partial -or- Optional) 
+
+
+
+6- Each album has a number of songs on it, but no song may appear on more than one album. 
+Relationships -> 
+    Album-has-Songs:
+    One-to-Many relationship (An album can have many songs, but a song can belong to only one album)
+        -> Album--->m>Songs 
+        -> Album<1<---Songs 
+Participation -> 
+    Album -> (Total -or- Mandatory)
+    Songs -> (Partial -or- Optional) 
+
+
+
+7- Each song is performed by one or more musicians, and a musician may perform a number of songs. 
+Relationships ->
+    Song-isPerformedBy-Musician:
+    Many-to-Many 
+        -> Song--->m>Musician 
+        -> Song<m<---Musician 
+Participation -> 
+    Song     -> (Total -or- Mandatory) 
+    Musician -> (Partial -or- Optional) 
+
+
+
+8- Each album has exactly one musician who acts as its producer. A producer may produce several albums. 
+Relationships ->
+    Album-isProducedBy-Musician:
+    One-to-Many relationship (An album has one producer, but a musician can produce multiple albums)
+    -> Album--->1>Musician
+    -> Album<m<---Musician
+Participation -> 
+    Album    -> (Total -or- Mandatory) 
+    Musician -> (Partial -or- Optional) 
+
+
+
+
+MusicianID            => Simple
+Address(Street, City) => Composite Attributes
+
+
+
+// =========================================
+// =========================================
+// Problem 2 
+Prepare an E-R diagram for a real estate firm that lists properties for sale. The following describes this organization: 
+
+1- The firm has a number of sales offices in several states. Attributes of sales office include Office_Number and Location. 
+Entity -> SalesOffice:
+    Attributes -> 'OfficeNumber', Location
+
+
+
+2- Each sales office is assigned one or more employees. Attributes of employee include Employee_ID and Employee_Name. An employee must be assigned to only one sales office. 
+Entity -> Employee:
+    Attributes -> 'EmployeeID', EmployeeName
+Relationships ->
+    SalesOffice-employs-Employee:
+    One-to-Many relationship (A sales office can have many employees, but an employee is assigned to only one sales office)
+    -> SalesOffice--->1>Employee
+    -> SalesOffice<m<---Employee
+Participation -> 
+    SalesOffice -> (Total -or- Mandatory) 
+    Employee    -> (Partial -or- Optional) 
+
+
+
+3- For each sales office, there is always one employee assigned to manage that office.  
+Relationships ->
+    SalesOffice-isManagedBy-Employee:
+    One-to-One relationship (Each sales office has one manager)
+    -> SalesOffice--->1>Employee
+    -> SalesOffice<1<---Employee
+Participation -> 
+    SalesOffice -> (Total -or- Mandatory) 
+    Employee    -> (Partial -or- Optional) 
+
+
+4- The firm lists property for sale. Attributes of property include Property_ID and Location. Components of Location include Address, City, State, and Zip_Code. 
+Entity -> Property:
+    Attributes -> 'PropertyID', Location (Address, City, State, ZipCode)
+
+
+
+5- Each property must be listed with one (and only one) of the sales offices. A sales office may have any number of properties listed, or may have no properties listed. 
+Relationships ->
+    SalesOffice-lists-Property:
+    One-to-Many relationship (A sales office can list many properties, but each property is listed with only one sales office)
+    -> SalesOffice--->m>Property
+    -> SalesOffice<1<---Property
+Participation -> 
+    SalesOffice -> (Partial -or- Optional)
+    Property    -> (Total -or- Mandatory) 
+
+
+
+6- Each property may have zero or more owners. Attributes of owners are Owner_ID and Owner_Name. An owner may own one or more properties. The system stores the percent owned by each owner in each property.
+Entity -> Owner:
+    Attributes -> 'OwnerID', OwnerName
+Relationships ->
+    Property-isOwnedBy-Owner:
+    Many-to-Many relationship (A property can have multiple owners, and an owner can own multiple properties)
+    -> Property--->m>Owner
+    -> Property<m<---Owner
+Participation -> 
+    Property -> (Partial -or- Optional)
+    Owner    ->  (Total -or- Mandatory) 
+
+
+
+
